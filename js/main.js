@@ -1,90 +1,51 @@
-var numPoints = 50;
-var subdivision = 1000;
-var canvas;			
-var points = [], spline;
-var timer;
 
-init();
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-//Re-size
-function resize() {
-	const width = window.innerWidth;
-	const height = window.innerHeight;
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setClearColor( 0xffffff, 1 );
+document.body.appendChild( renderer.domElement );
 
-	canvas.width = width;
-	canvas.height = height;
-	$(canvas).css({
-		width: width + 'px',
-		height: height + 'px'
-	});
-}
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
-function init () {
+camera.position.z = 20;
 
-	canvas = document.createElement( 'canvas' );
-	document.body.appendChild( canvas );		
+//Create a closed bent a sine-like wave
+var curve = new THREE.CatmullRomCurve3( [
+	new THREE.Vector3( -10, 0, 10 ),
+	new THREE.Vector3( -5, 5, 5 ),
+	new THREE.Vector3( 0, 0, 0 ),
+	new THREE.Vector3( 5, -5, 5 ),
+	new THREE.Vector3( 10, 0, 10 )
+	] );
 
-	$(window).on('resize', resize);
-	resize();	
+curve.closed = true;
 
+var geometry = new THREE.Geometry();
+geometry.vertices = curve.getPoints( 100 );
 
-	for ( var i = 0, l = numPoints; i < l; i ++ ) {
+var material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
 
-		var point = new THREE.Vector3( i / l, Math.random(), 0 );
-		points.push( point );
-	}
+//Create the final Object3d to add to the scene
+var splineObject = new THREE.Line( geometry, material );
 
+scene.add(splineObject);
 
-	spline = new THREE.Spline( points );
+var render = function () {
+	requestAnimationFrame( render );
+	renderer.render(scene, camera);
+};
 
-	var timer = new Timer( 1 );
-	timer.loop = true;
-	timer.play();
+render();
 
-	function animate() {
+window.addEventListener( 'resize', onWindowResize, false );
 
-		requestAnimationFrame( animate );
+function onWindowResize(){
 
-		// var point = spline.getPoint( timer.currentTime / timer.duration );
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
 
-		canvas.context = canvas.getContext( '2d' );
-		canvas.context.lineWidth = 2;
-		canvas.context.strokeStyle = '#ff0000';
-		canvas.context.fillStyle = '#f0f0f0';
-		canvas.context.fillRect( 0, 0, canvas.width, canvas.height );
-		canvas.context.beginPath();
-
-		for ( var i = 0, l = subdivision; i <= l; i ++ ) {
-
-			var point = spline.getPoint( i / l );
-
-			if ( i === 0 ) {
-
-				canvas.context.moveTo( getX( point.x ), getY( point.y ) );
-
-			} else {
-
-				canvas.context.lineTo( getX( point.x ), getY( point.y ) );
-
-			}
-
-		}
-
-		canvas.context.stroke();
-	};
-
-	animate();
-
-}
-
-function getX( value ) {
-
-	return value * canvas.width;
-
-}
-
-function getY( value ) {
-
-	return value * canvas.height;
+	renderer.setSize( window.innerWidth, window.innerHeight );
 
 }
