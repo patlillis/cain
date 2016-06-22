@@ -1,5 +1,12 @@
 //http://threejs.org/examples/webgl_lines_sphere.html
 
+import Organic from './Organic.js'
+import THREE from "three";
+//var THREE = THREELib(); // return THREE JS 
+
+const o = new Organic();
+
+o.test();
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
