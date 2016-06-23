@@ -4,9 +4,9 @@
   "description": "",
   "author": "Pat Lillis",
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "build:prod": "rollup -c --environment BUILD:production"
+    "build": "rollup --config --sourcemap",
+    "watch": "rollup --config --sourcemap --watch",
+    "build:prod": "rollup --config --environment BUILD:production"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "rollup-plugin-filesize": "^0.4.4",
     "rollup-plugin-node-resolve": "^1.7.0",
     "rollup-plugin-uglify": "^1.0.0",
+    "rollup-watch": "^2.4.0",
     "three": "^0.78.0"
   }
 }

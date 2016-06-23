@@ -8,7 +8,8 @@ import filesize from 'rollup-plugin-filesize';
 var plugins = [
 	babel({
 		exclude: 'node_modules/**',
-		presets: 'es2015-rollup'
+		presets: 'es2015-rollup',
+		sourceMaps: true
 	}),
 	nodeResolve({
 		// use "jsnext:main" if possible
@@ -43,7 +44,7 @@ var plugins = [
 		ignoreGlobal: false,  // Default: false
 
 		// if false then skip sourceMap generation for CommonJS modules
-		sourceMap: false,  // Default: true
+		sourceMap: true,  // Default: true
 
 		// explicitly specify unresolvable named exports
 		// (see below for more details)
