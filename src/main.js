@@ -13,7 +13,7 @@ document.body.appendChild( renderer.domElement );
 
 var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
-camera.position.z = 20;
+camera.position.z = 70;
 
 const o = new Organic();
 o.addToScene(scene);
