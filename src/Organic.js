@@ -21,9 +21,9 @@ export default class Organic {
 
 		this.curves.push(new Curve([
 			new THREE.Vector3(23, 3),
-			new THREE.Vector3(0, -20),
-			new THREE.Vector3(-20, -20),
-			new THREE.Vector3(-45, -40)
+			new THREE.Vector3(37, -10),
+			new THREE.Vector3(37, -15),
+			new THREE.Vector3(35, -25)
 		]));
 
 		var material = new THREE.MeshBasicMaterial({
